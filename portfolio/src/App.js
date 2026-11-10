@@ -3,37 +3,103 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const initialData = {
-  name: "Your Full Name",
-  usn: "Your USN",
-  college: "Your College Name",
-  phone: "+91 XXXXX XXXXX",
-  email: "yourmail@gmail.com",
-  course: "Computer Science Student",
+  name: "Namana N",
+  usn: "Enter Your USN",
+  college: "Atria Institute of Technology",
+  phone: "Enter Your Phone Number",
+  email: "Enter Your Email Address",
+  course: "B.E. – Information Science and Engineering",
   about:
-    "I am a passionate student interested in web development, programming and creating innovative projects.",
+    "I am a 5th semester Information Science and Engineering student at Atria Institute of Technology. I am interested in software development, web technologies and Artificial Intelligence. I enjoy learning new technologies and building practical projects.",
+
   photo: "",
+
+  education: [
+    {
+      degree: "School Education",
+      branch: "School Education",
+      college: "Vivekananda School",
+      year: "2022"
+    },
+    {
+      degree: "Pre-University (PU)",
+      branch: "PU Education",
+      college: "Base PU College",
+      year: "2024"
+    },
+    {
+      degree: "Bachelor of Engineering (B.E.)",
+      branch: "Information Science and Engineering",
+      college: "Atria Institute of Technology",
+      year: "5th Semester – Currently Pursuing"
+    }
+  ],
+
   projects: [
     {
-      title: "My First Project",
-      description: "Describe your project here.",
-      tech: "React, HTML, CSS",
+      title: "Neuro Nest",
+      description:
+        "An academic project focused on developing a technology-based solution. Add the project's main features and your contribution here.",
+      tech: "Add the technologies used",
+      link: ""
+    },
+    {
+      title: "Hoppy – Digital Drawing Application",
+      description:
+        "A digital drawing application that provides users with a simple interactive space to create and work on drawings.",
+      tech: "Add the technologies used",
+      link: ""
+    },
+    {
+      title: "Seed Sowing Machine",
+      description:
+        "An academic project focused on helping with the seed-sowing process. Add the machine's working details and your contribution here.",
+      tech: "Add the tools and components used",
       link: ""
     }
   ],
+
+  skills: [
+    { name: "Python", level: 70 },
+    { name: "C Programming", level: 65 },
+    { name: "Java", level: 60 },
+    { name: "React.js", level: 60 },
+    { name: "HTML", level: 75 },
+    { name: "CSS", level: 70 },
+    { name: "Communication", level: 75 }
+  ],
+
   certificates: [
     {
-      title: "Web Development Certificate",
-      organization: "Organization Name",
-      date: "2026",
+      title: "Artificial Intelligence",
+      organization: "Add Organization",
+      date: "Add Year",
+      link: ""
+    },
+    {
+      title: "Agentic AI Workshop",
+      organization: "Add Organization",
+      date: "Add Year",
+      link: ""
+    },
+    {
+      title: "Basics of Python",
+      organization: "Add Organization",
+      date: "Add Year",
+      link: ""
+    },
+    {
+      title: "Mastering in Python",
+      organization: "Add Organization",
+      date: "Add Year",
+      link: ""
+    },
+    {
+      title: "C Programming",
+      organization: "Add Organization",
+      date: "Add Year",
       link: ""
     }
-  ],
-  skills: [
-    { name: "HTML", level: 90 },
-    { name: "CSS", level: 85 },
-    { name: "JavaScript", level: 75 },
-    { name: "React", level: 70 },
-    { name: "Python", level: 65 }
   ]
 };
 
@@ -43,7 +109,9 @@ function App() {
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem("myPortfolio");
-      return saved ? { ...initialData, ...JSON.parse(saved) } : initialData;
+      return saved
+        ? { ...initialData, ...JSON.parse(saved) }
+        : initialData;
     } catch {
       return initialData;
     }
@@ -84,7 +152,7 @@ function App() {
     }));
   };
 
-  const handlePhoto = (e) => {
+  const handlePhoto = e => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -129,11 +197,14 @@ function App() {
 
       {/* NAVBAR */}
       <nav className="navbar">
-        <a className="logo" href="#home">MY<span>PORTFOLIO.</span></a>
+        <a className="logo" href="#home">
+          MY<span>PORTFOLIO.</span>
+        </a>
 
         <div className="nav-links">
           <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="#education">Education</a>
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
           <a href="#certificates">Certificates</a>
@@ -154,10 +225,15 @@ function App() {
           <p className="welcome">WELCOME TO MY PORTFOLIO</p>
 
           <h1>
-            Hi, I'm <span><Field field="name" placeholder="Your Name" /></span>
+            Hi, I'm{" "}
+            <span>
+              <Field field="name" placeholder="Your Name" />
+            </span>
           </h1>
 
-          <h2><Field field="course" placeholder="Your Course" /></h2>
+          <h2>
+            <Field field="course" placeholder="Your Course" />
+          </h2>
 
           <p className="hero-text">
             <TextField field="about" />
@@ -182,14 +258,18 @@ function App() {
             {data.photo ? (
               <img src={data.photo} alt="Profile" />
             ) : (
-              <div className="profile-placeholder">👨‍🎓</div>
+              <div className="profile-placeholder">👩‍🎓</div>
             )}
           </div>
 
           {editMode && (
             <label className="photo-upload">
               Change Profile Photo
-              <input type="file" accept="image/*" onChange={handlePhoto} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhoto}
+              />
             </label>
           )}
         </div>
@@ -233,6 +313,86 @@ function App() {
         </div>
       </section>
 
+      {/* EDUCATION */}
+      <section className="section" id="education">
+        <p className="section-label">MY ACADEMIC JOURNEY</p>
+        <h2>My <span>Education</span></h2>
+
+        <div className="cards-grid">
+          {data.education.map((edu, index) => (
+            <div className="content-card" key={index}>
+              <div className="card-icon">🎓</div>
+
+              {editMode ? (
+                <>
+                  <input
+                    value={edu.degree}
+                    placeholder="Degree"
+                    onChange={e =>
+                      updateItem("education", index, "degree", e.target.value)
+                    }
+                  />
+
+                  <input
+                    value={edu.branch}
+                    placeholder="Course or branch"
+                    onChange={e =>
+                      updateItem("education", index, "branch", e.target.value)
+                    }
+                  />
+
+                  <input
+                    value={edu.college}
+                    placeholder="School or college"
+                    onChange={e =>
+                      updateItem("education", index, "college", e.target.value)
+                    }
+                  />
+
+                  <input
+                    value={edu.year}
+                    placeholder="Graduation year or current semester"
+                    onChange={e =>
+                      updateItem("education", index, "year", e.target.value)
+                    }
+                  />
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteItem("education", index)}
+                  >
+                    Delete Education
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h3>{edu.degree}</h3>
+                  <p>{edu.branch}</p>
+                  <p>{edu.college}</p>
+                  <p className="tech">{edu.year}</p>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {editMode && (
+          <button
+            className="add-btn"
+            onClick={() =>
+              addItem("education", {
+                degree: "New Qualification",
+                branch: "Course or Branch",
+                college: "Institution Name",
+                year: "Year"
+              })
+            }
+          >
+            + Add Education
+          </button>
+        )}
+      </section>
+
       {/* PROJECTS */}
       <section className="section" id="projects">
         <p className="section-label">MY WORK</p>
@@ -248,24 +408,39 @@ function App() {
                   <input
                     value={project.title}
                     placeholder="Project name"
-                    onChange={e => updateItem("projects", index, "title", e.target.value)}
+                    onChange={e =>
+                      updateItem("projects", index, "title", e.target.value)
+                    }
                   />
+
                   <textarea
                     value={project.description}
                     placeholder="Project description"
-                    onChange={e => updateItem("projects", index, "description", e.target.value)}
+                    onChange={e =>
+                      updateItem("projects", index, "description", e.target.value)
+                    }
                   />
+
                   <input
                     value={project.tech}
                     placeholder="Technologies used"
-                    onChange={e => updateItem("projects", index, "tech", e.target.value)}
+                    onChange={e =>
+                      updateItem("projects", index, "tech", e.target.value)
+                    }
                   />
+
                   <input
                     value={project.link}
                     placeholder="GitHub / Project URL"
-                    onChange={e => updateItem("projects", index, "link", e.target.value)}
+                    onChange={e =>
+                      updateItem("projects", index, "link", e.target.value)
+                    }
                   />
-                  <button className="delete-btn" onClick={() => deleteItem("projects", index)}>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteItem("projects", index)}
+                  >
                     Delete Project
                   </button>
                 </>
@@ -274,8 +449,13 @@ function App() {
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                   <p className="tech">{project.tech}</p>
+
                   {project.link && (
-                    <a href={project.link} target="_blank" rel="noreferrer">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       View Project ↗
                     </a>
                   )}
@@ -288,12 +468,14 @@ function App() {
         {editMode && (
           <button
             className="add-btn"
-            onClick={() => addItem("projects", {
-              title: "New Project",
-              description: "Project description",
-              tech: "Technologies",
-              link: ""
-            })}
+            onClick={() =>
+              addItem("projects", {
+                title: "New Project",
+                description: "Project description",
+                tech: "Technologies used",
+                link: ""
+              })
+            }
           >
             + Add Project
           </button>
@@ -312,7 +494,9 @@ function App() {
                 {editMode ? (
                   <input
                     value={skill.name}
-                    onChange={e => updateItem("skills", index, "name", e.target.value)}
+                    onChange={e =>
+                      updateItem("skills", index, "name", e.target.value)
+                    }
                   />
                 ) : (
                   <strong>{skill.name}</strong>
@@ -325,10 +509,14 @@ function App() {
                     min="0"
                     max="100"
                     value={skill.level}
-                    onChange={e => updateItem(
-                      "skills", index, "level",
-                      Math.min(100, Math.max(0, Number(e.target.value)))
-                    )}
+                    onChange={e =>
+                      updateItem(
+                        "skills",
+                        index,
+                        "level",
+                        Math.min(100, Math.max(0, Number(e.target.value)))
+                      )
+                    }
                   />
                 ) : (
                   <span>{skill.level}%</span>
@@ -343,7 +531,10 @@ function App() {
               </div>
 
               {editMode && (
-                <button className="delete-btn" onClick={() => deleteItem("skills", index)}>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteItem("skills", index)}
+                >
                   Delete Skill
                 </button>
               )}
@@ -354,7 +545,9 @@ function App() {
         {editMode && (
           <button
             className="add-btn"
-            onClick={() => addItem("skills", { name: "New Skill", level: 50 })}
+            onClick={() =>
+              addItem("skills", { name: "New Skill", level: 50 })
+            }
           >
             + Add Skill
           </button>
@@ -375,22 +568,42 @@ function App() {
                 <>
                   <input
                     value={cert.title}
-                    onChange={e => updateItem("certificates", index, "title", e.target.value)}
+                    onChange={e =>
+                      updateItem("certificates", index, "title", e.target.value)
+                    }
                   />
+
                   <input
                     value={cert.organization}
-                    onChange={e => updateItem("certificates", index, "organization", e.target.value)}
+                    onChange={e =>
+                      updateItem(
+                        "certificates",
+                        index,
+                        "organization",
+                        e.target.value
+                      )
+                    }
                   />
+
                   <input
                     value={cert.date}
-                    onChange={e => updateItem("certificates", index, "date", e.target.value)}
+                    onChange={e =>
+                      updateItem("certificates", index, "date", e.target.value)
+                    }
                   />
+
                   <input
                     value={cert.link}
                     placeholder="Certificate URL"
-                    onChange={e => updateItem("certificates", index, "link", e.target.value)}
+                    onChange={e =>
+                      updateItem("certificates", index, "link", e.target.value)
+                    }
                   />
-                  <button className="delete-btn" onClick={() => deleteItem("certificates", index)}>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteItem("certificates", index)}
+                  >
                     Delete Certificate
                   </button>
                 </>
@@ -399,8 +612,13 @@ function App() {
                   <h3>{cert.title}</h3>
                   <p>{cert.organization}</p>
                   <p className="tech">{cert.date}</p>
+
                   {cert.link && (
-                    <a href={cert.link} target="_blank" rel="noreferrer">
+                    <a
+                      href={cert.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       View Certificate ↗
                     </a>
                   )}
@@ -413,12 +631,14 @@ function App() {
         {editMode && (
           <button
             className="add-btn"
-            onClick={() => addItem("certificates", {
-              title: "New Certificate",
-              organization: "Organization",
-              date: "2026",
-              link: ""
-            })}
+            onClick={() =>
+              addItem("certificates", {
+                title: "New Certificate",
+                organization: "Organization",
+                date: "Year",
+                link: ""
+              })
+            }
           >
             + Add Certificate
           </button>
@@ -431,17 +651,32 @@ function App() {
         <h2>Contact <span>Me</span></h2>
 
         <div className="contact-card">
-          <p>Have a project or opportunity? Feel free to contact me.</p>
-          <p>📧 <Field field="email" placeholder="Your email" /></p>
-          <p>📱 <Field field="phone" placeholder="Your phone" /></p>
-          <a className="primary-btn" href={`mailto:${data.email}`}>
+          <p>
+            Have a project or opportunity? Feel free to contact me.
+          </p>
+
+          <p>
+            📧 <Field field="email" placeholder="Your email" />
+          </p>
+
+          <p>
+            📱 <Field field="phone" placeholder="Your phone" />
+          </p>
+
+          <a
+            className="primary-btn"
+            href={`mailto:${data.email}`}
+          >
             Send Me an Email
           </a>
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer>
-        <p>© {new Date().getFullYear()} {data.name}. All Rights Reserved.</p>
+        <p>
+          © {new Date().getFullYear()} {data.name}. All Rights Reserved.
+        </p>
         <a href="#home">Back to Top ↑</a>
       </footer>
 
